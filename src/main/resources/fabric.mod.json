@@ -7,8 +7,8 @@
   "authors": ["Minor2CCh"],
   "contact": {
     "homepage": "https://modrinth.com/project/fabric-simple-generator",
-    "issues": "",
-    "sources": ""
+    "issues": "https://github.com/Minor2CCh/FabricSimpleGenerator/issues",
+    "sources": "https://github.com/Minor2CCh/FabricSimpleGenerator"
   },
   "license": "MIT",
   "icon": "assets/fabric_simple_generator/icon.png",
