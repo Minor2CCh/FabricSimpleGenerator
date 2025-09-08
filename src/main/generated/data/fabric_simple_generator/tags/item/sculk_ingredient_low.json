@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "deeperdarker:soul_dust",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:sculk_gleam",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:sculk_bone",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:gloomy_sculk",
+      "required": false
+    }
+  ]
+}

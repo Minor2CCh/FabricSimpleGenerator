@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "deeperdarker:sculk_tendrils",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:sculk_vines",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:sculk_stone",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:cobbled_sculk_stone",
+      "required": false
+    }
+  ]
+}

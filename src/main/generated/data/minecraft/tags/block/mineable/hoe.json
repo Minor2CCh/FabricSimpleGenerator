@@ -1,0 +1,7 @@
+{
+  "values": [
+    "fabric_simple_generator:biomass_generator",
+    "fabric_simple_generator:biomass_generator_8x",
+    "fabric_simple_generator:biomass_generator_64x"
+  ]
+}

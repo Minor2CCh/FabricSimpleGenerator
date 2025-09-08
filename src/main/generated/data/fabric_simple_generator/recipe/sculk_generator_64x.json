@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "fabric_simple_generator:sculk_generator_8x"
+    },
+    "$": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fabric_simple_generator:sculk_generator_64x"
+  }
+}

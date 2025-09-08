@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "fabric_simple_generator:diamond_generator"
+  },
+  "result": {
+    "count": 1,
+    "id": "fabric_simple_generator:netherite_generator"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

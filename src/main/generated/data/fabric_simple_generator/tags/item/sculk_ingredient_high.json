@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "apothic_ehchanting:warden_tendril",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:warden_carapace",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:heart_of_the_deep",
+      "required": false
+    }
+  ]
+}

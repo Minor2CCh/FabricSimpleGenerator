@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fabric_simple_generator:sculk_generator_64x"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "fabric_simple_generator:blocks/sculk_generator_64x"
+}

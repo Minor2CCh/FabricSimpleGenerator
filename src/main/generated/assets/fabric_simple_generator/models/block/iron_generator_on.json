@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "fabric_simple_generator:block/iron_generator_front_on",
+    "side": "fabric_simple_generator:block/iron_generator_side",
+    "top": "fabric_simple_generator:block/iron_generator_top"
+  }
+}

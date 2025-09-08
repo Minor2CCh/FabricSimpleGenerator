@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "fabric_simple_generator:biomass_generator"
+    },
+    "$": {
+      "item": "minecraft:end_crystal"
+    }
+  },
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "fabric_simple_generator:biomass_generator_8x"
+  }
+}

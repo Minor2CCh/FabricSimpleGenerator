@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "fabric_simple_generator",
+  "version": "${version}",
+  "name": "Fabric Simple Generator",
+  "description": "Add simple generators to Fabric",
+  "authors": ["Minor2CCh"],
+  "contact": {
+    "homepage": "https://modrinth.com/project/fabric-simple-generator",
+    "issues": "",
+    "sources": ""
+  },
+  "license": "MIT",
+  "icon": "assets/fabric_simple_generator/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.Minor2CCh.fabricsimplegenerator.client.datagen.FabricSimpleGeneratorDataGenerator"
+    ],
+    "client": [
+      "com.Minor2CCh.fabricsimplegenerator.client.FabricSimpleGeneratorClient"
+    ],
+    "main": [
+      "com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator"
+    ]
+  },
+  "mixins": [
+    "fabric_simple_generator.mixins.json",
+    {
+      "config": "fabric_simple_generator.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

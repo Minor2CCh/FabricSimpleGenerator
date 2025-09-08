@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "deeperdarker:sculk_jaw",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:gloomy_geyser",
+      "required": false
+    }
+  ]
+}
