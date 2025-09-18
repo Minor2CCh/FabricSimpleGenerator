@@ -47,7 +47,7 @@ public class FSGRecipeProvider extends FabricRecipeProvider {
                 .pattern("###")
                 .pattern("#$#")
                 .pattern("#A#")
-                .input('#', Items.IRON_INGOT)
+                .input('#', Items.GOLD_INGOT)
                 .input('$', FSGItems.IRON_GENERATOR)
                 .input('A', Items.REDSTONE_BLOCK)
                 .criterion("has_item", conditionsFromItem(FSGItems.IRON_GENERATOR))

@@ -30,6 +30,7 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
     public long TICK_GENERATE;
     public SimpleEnergyStorage energyStorage;
     private long readCapacity = 0; // 保存したい情報
+    public static final int DEC_BURN_TIME = 4;
     private int burnTime = 0;
     private int startBurnTime = 0;
     public static final int PROPERTY_SIZE = 11;
@@ -158,8 +159,8 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
         this.startBurnTime = value;
         markDirty(); // 変更を保存対象にする
     }
-    public void decBurnTime() {
-        this.burnTime -= 4;
+    public void decBurnTime(int value) {
+        this.burnTime -= value;
         markDirty(); // 変更を保存対象にする
     }
 
@@ -189,15 +190,26 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
     public static void tick(World world, BlockPos pos, BlockState state, AbstractGeneratorBlockEntity be) {
         be.tick(world, pos, state);
     }
+    public static int decisionGenerateMul(long defaultGen, long capacity, long maxCapacity, int burnTime) {
+        for(int i = 1;i <= DEC_BURN_TIME&&i<=burnTime;i++){
+            long gen = Math.round(((double)defaultGen) * i / DEC_BURN_TIME);
+            if(capacity+gen >= maxCapacity){
+                return i;
+            }
+        }
+        return DEC_BURN_TIME;
+    }
     protected void tick(World world, BlockPos pos, BlockState state){
         if (!world.isClient) {
             if(state.getBlock() instanceof AbstractGeneratorBlock){
                 if(getBurnTime() > 0){
                     energyStorage.amount = getCapacity();
-                    if(energyStorage.amount != CAPACITY){
-                        energyStorage.amount = Math.min(energyStorage.amount+(TICK_GENERATE / (4 / (Math.min(getBurnTime(), 4)))), CAPACITY);
+                    if(energyStorage.getAmount() != CAPACITY){
+                        int tickMul = decisionGenerateMul(TICK_GENERATE, energyStorage.amount, CAPACITY, getBurnTime());
+                        long gen = Math.round(((double)TICK_GENERATE) * tickMul / DEC_BURN_TIME);
+                        energyStorage.amount = Math.min(energyStorage.amount+gen, CAPACITY);
                         setCapacity(energyStorage.getAmount());
-                        decBurnTime();
+                        decBurnTime(tickMul);
                     }
                 }
                 if(getBurnTime() <= 0){
@@ -263,6 +275,7 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
                 }
             }
         }
+        this.setCapacity(this.energyStorage.getAmount());
         this.markDirty();
     }
 
