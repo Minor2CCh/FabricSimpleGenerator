@@ -35,8 +35,8 @@ public class FSGLanguageProvider extends FabricLanguageProvider {
                 translationBuilder.add(FSGBlocks.IRON_GENERATOR_8X, "8X Iron Generator");
                 translationBuilder.add(FSGBlocks.COPPER_GENERATOR_8X, "8X Copper Generator");
                 translationBuilder.add(FSGBlocks.GOLD_GENERATOR_8X, "8X Gold Generator");
-                translationBuilder.add(FSGBlocks.EMERALD_GENERATOR_8X, "8X Diamond Generator");
-                translationBuilder.add(FSGBlocks.DIAMOND_GENERATOR_8X, "8X Emerald Generator");
+                translationBuilder.add(FSGBlocks.EMERALD_GENERATOR_8X, "8X Emerald Generator");
+                translationBuilder.add(FSGBlocks.DIAMOND_GENERATOR_8X, "8X Diamond Generator");
                 translationBuilder.add(FSGBlocks.NETHERITE_GENERATOR_8X, "8X Netherite Generator");
                 translationBuilder.add(FSGBlocks.SCULK_GENERATOR_8X, "8X Sculk Generator");
                 translationBuilder.add(FSGBlocks.BIOMASS_GENERATOR_8X, "8X Biomass Generator");
@@ -83,8 +83,8 @@ public class FSGLanguageProvider extends FabricLanguageProvider {
                 translationBuilder.add(FSGBlocks.IRON_GENERATOR_8X, "8倍鉄の発電機");
                 translationBuilder.add(FSGBlocks.COPPER_GENERATOR_8X, "8倍銅の発電機");
                 translationBuilder.add(FSGBlocks.GOLD_GENERATOR_8X, "8倍金の発電機");
-                translationBuilder.add(FSGBlocks.EMERALD_GENERATOR_8X, "8倍ダイヤモンドの発電機");
-                translationBuilder.add(FSGBlocks.DIAMOND_GENERATOR_8X, "8倍エメラルドの発電機");
+                translationBuilder.add(FSGBlocks.EMERALD_GENERATOR_8X, "8倍エメラルドの発電機");
+                translationBuilder.add(FSGBlocks.DIAMOND_GENERATOR_8X, "8倍ダイヤモンドの発電機");
                 translationBuilder.add(FSGBlocks.NETHERITE_GENERATOR_8X, "8倍ネザライトの発電機");
                 translationBuilder.add(FSGBlocks.SCULK_GENERATOR_8X, "8倍スカルクの発電機");
                 translationBuilder.add(FSGBlocks.BIOMASS_GENERATOR_8X, "8倍バイオマス発電機");
