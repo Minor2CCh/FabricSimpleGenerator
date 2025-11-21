@@ -26,12 +26,15 @@ Generate:20E/t<br>
 Use Ingredient:Sculk Items<br>
 ## Biomass Generator<br>
 Generate:10E/t<br>
-Use Ingredient:Compost Items<br>
+Use Ingredient:Compostable Items<br>
+## Enchantment Generator<br>
+Generate:Varies by enchantment<br>
+Use Ingredient:An enchanted book or an enchanted item (the item will be returned with the enchantment removed)<br>
 ## 8x Generator<br>
 Generate:It has parameters eight times greater than the original.<br>
 ## 64x Generator<br>
 Generate:It has 64 times the parameters of the original.<br>
-Only Netherite, Sculk, and Biomass exist.<br>
+Only Netherite, Sculk, Biomass, and Enchantment exist.<br>
 # Config<br>
 Some parameters can be changed for each generator.<br>
 ## capacity<br>
@@ -41,4 +44,6 @@ You can change the amount of power that can be supplied to the generator's front
 ## generate<br>
 You can change the amount of energy generated per tick.<br>
 ## bioTime<br>
-You can change the maximum power generation tick for the Biomass Generator (true tick:value/4).
+You can change the maximum power generation tick for the Biomass Generator. (true tick:value/4)<br>
+## canCurseRemoval<br>
+Enchantment Generator can be modified to use Curse Enchantments as energy. (Default: true)
