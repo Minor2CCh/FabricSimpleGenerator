@@ -3,7 +3,7 @@
   "id": "fabric_simple_generator",
   "version": "${version}",
   "name": "Fabric Simple Generator",
-  "description": "Add simple generators to Fabric",
+  "description": "A Fabric mod that adds a simple generator using fuel as its material.",
   "authors": ["Minor2CCh"],
   "contact": {
     "homepage": "https://modrinth.com/project/fabric-simple-generator",
@@ -32,7 +32,7 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
+    "fabricloader": ">=0.17.0",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
   }

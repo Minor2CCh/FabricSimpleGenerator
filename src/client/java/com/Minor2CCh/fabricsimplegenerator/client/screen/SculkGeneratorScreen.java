@@ -1,14 +1,11 @@
 package com.Minor2CCh.fabricsimplegenerator.client.screen;
 
 import com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator;
-import com.Minor2CCh.fabricsimplegenerator.screen.FuelGeneratorScreenHandler;
 import com.Minor2CCh.fabricsimplegenerator.screen.SculkGeneratorScreenHandler;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 public class SculkGeneratorScreen extends AbstractGeneratorScreen<SculkGeneratorScreenHandler> {
 

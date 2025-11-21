@@ -1,14 +1,12 @@
 package com.Minor2CCh.fabricsimplegenerator.registry;
 
 import com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator;
-import com.Minor2CCh.fabricsimplegenerator.block.BiomassGeneratorBlock;
-import com.Minor2CCh.fabricsimplegenerator.block.FuelGeneratorBlock;
-import com.Minor2CCh.fabricsimplegenerator.block.GeneratorTier;
-import com.Minor2CCh.fabricsimplegenerator.block.SculkGeneratorBlock;
+import com.Minor2CCh.fabricsimplegenerator.block.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -31,13 +29,16 @@ public class FSGBlocks {
             .strength(3.5F, 6.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block NETHERITE_GENERATOR = register("netherite_generator", new FuelGeneratorBlock(GeneratorTier.NETHERITE, 1, Block.Settings.copy(Blocks.NETHERITE_BLOCK)
-            .strength(3.5F, 6.0F)
+            .strength(3.5F, 1200.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block SCULK_GENERATOR = register("sculk_generator", new SculkGeneratorBlock(GeneratorTier.SCULK, 1, Block.Settings.copy(Blocks.SCULK_CATALYST)
             .strength(3.5F, 6.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block BIOMASS_GENERATOR = register("biomass_generator", new BiomassGeneratorBlock(GeneratorTier.BIOMASS, 1, AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.MOSS_BLOCK)
             .strength(3.5F, 6.0F)
+            .luminance(Blocks.createLightLevelFromLitBlockState(13))));
+    public static final Block ENCHANTMENT_GENERATOR = register("enchantment_generator", new EnchantmentGeneratorBlock(GeneratorTier.ENCHANTMENT, 1, AbstractBlock.Settings.create().mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASEDRUM).sounds(BlockSoundGroup.STONE).requiresTool()
+            .strength(3.5F, 1200.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block IRON_GENERATOR_8X = register("iron_generator_8x", new FuelGeneratorBlock(GeneratorTier.IRON, 8, Block.Settings.copy(Blocks.IRON_BLOCK)
             .strength(3.5F, 6.0F)
@@ -55,7 +56,7 @@ public class FSGBlocks {
             .strength(3.5F, 6.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block NETHERITE_GENERATOR_8X = register("netherite_generator_8x", new FuelGeneratorBlock(GeneratorTier.NETHERITE, 8, Block.Settings.copy(Blocks.NETHERITE_BLOCK)
-            .strength(3.5F, 6.0F)
+            .strength(3.5F, 1200.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block SCULK_GENERATOR_8X = register("sculk_generator_8x", new SculkGeneratorBlock(GeneratorTier.SCULK, 8, Block.Settings.copy(Blocks.SCULK_CATALYST)
             .strength(3.5F, 6.0F)
@@ -63,14 +64,20 @@ public class FSGBlocks {
     public static final Block BIOMASS_GENERATOR_8X = register("biomass_generator_8x", new BiomassGeneratorBlock(GeneratorTier.BIOMASS, 8, AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.MOSS_BLOCK)
             .strength(3.5F, 6.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
+    public static final Block ENCHANTMENT_GENERATOR_8X = register("enchantment_generator_8x", new EnchantmentGeneratorBlock(GeneratorTier.ENCHANTMENT, 8, AbstractBlock.Settings.create().mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASEDRUM).sounds(BlockSoundGroup.STONE).requiresTool()
+            .strength(3.5F, 1200.0F)
+            .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block NETHERITE_GENERATOR_64X = register("netherite_generator_64x", new FuelGeneratorBlock(GeneratorTier.NETHERITE, 64, Block.Settings.copy(Blocks.NETHERITE_BLOCK)
-            .strength(3.5F, 6.0F)
+            .strength(3.5F, 1200.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block SCULK_GENERATOR_64X = register("sculk_generator_64x", new SculkGeneratorBlock(GeneratorTier.SCULK, 64, Block.Settings.copy(Blocks.SCULK_CATALYST)
             .strength(3.5F, 6.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static final Block BIOMASS_GENERATOR_64X = register("biomass_generator_64x", new BiomassGeneratorBlock(GeneratorTier.BIOMASS, 64, AbstractBlock.Settings.create().mapColor(MapColor.GREEN).sounds(BlockSoundGroup.MOSS_BLOCK)
             .strength(3.5F, 6.0F)
+            .luminance(Blocks.createLightLevelFromLitBlockState(13))));
+    public static final Block ENCHANTMENT_GENERATOR_64X = register("enchantment_generator_64x", new EnchantmentGeneratorBlock(GeneratorTier.ENCHANTMENT, 64, AbstractBlock.Settings.create().mapColor(MapColor.BLUE).instrument(NoteBlockInstrument.BASEDRUM).sounds(BlockSoundGroup.STONE).requiresTool()
+            .strength(3.5F, 1200.0F)
             .luminance(Blocks.createLightLevelFromLitBlockState(13))));
     public static Block register(String name, Block block) {
         Identifier id = Identifier.of(FabricSimpleGenerator.MOD_ID, name);

@@ -3,11 +3,12 @@ package com.Minor2CCh.fabricsimplegenerator.config;
 import java.util.LinkedHashMap;
 
 public class FSGConfig {
-    public enum constantTier {IRON, COPPER, GOLD, EMERALD, DIAMOND, NETHERITE, SCULK, BIOMASS}
+    public enum constantTier {IRON, COPPER, GOLD, EMERALD, DIAMOND, NETHERITE, SCULK, BIOMASS, ENCHANTMENT}
     public LinkedHashMap<constantTier, Long> capacity = mapSet(FSGConfigLoader.defaultCapacity);
     public LinkedHashMap<constantTier, Long> extract = mapSet(FSGConfigLoader.defaultExtract);
     public LinkedHashMap<constantTier, Long> generate = mapSet(FSGConfigLoader.defaultGenerate);
     public Integer bioTime = FSGConfigLoader.defaultBioTime;
+    public Boolean canCurseRemoval = FSGConfigLoader.defaultCanCurseRemoval;
     public void fillDefaults() {
         if (capacity == null)
             capacity = mapSet(FSGConfigLoader.defaultCapacity);
@@ -17,6 +18,8 @@ public class FSGConfig {
             generate = mapSet(FSGConfigLoader.defaultGenerate);
         if(bioTime == null)
             bioTime = FSGConfigLoader.defaultBioTime;
+        if(canCurseRemoval == null)
+            canCurseRemoval = FSGConfigLoader.defaultCanCurseRemoval;
         for(constantTier tier : constantTier.values()){
             capacity.computeIfAbsent(tier, t -> FSGConfigLoader.defaultCapacity[t.ordinal()]);
             extract.computeIfAbsent(tier, t -> FSGConfigLoader.defaultExtract[t.ordinal()]);

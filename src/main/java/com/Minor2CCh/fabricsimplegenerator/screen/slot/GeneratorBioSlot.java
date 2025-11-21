@@ -1,7 +1,6 @@
 package com.Minor2CCh.fabricsimplegenerator.screen.slot;
 
 import com.Minor2CCh.fabricsimplegenerator.screen.BiomassGeneratorScreenHandler;
-import com.Minor2CCh.fabricsimplegenerator.screen.SculkGeneratorScreenHandler;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;

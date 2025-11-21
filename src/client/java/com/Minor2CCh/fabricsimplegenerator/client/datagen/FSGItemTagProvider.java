@@ -1,10 +1,12 @@
 package com.Minor2CCh.fabricsimplegenerator.client.datagen;
 
 import com.Minor2CCh.fabricsimplegenerator.registry.FSGItemTags;
+import com.Minor2CCh.fabricsimplegenerator.registry.FSGItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
@@ -44,5 +46,8 @@ public class FSGItemTagProvider extends FabricTagProvider.ItemTagProvider{
         getOrCreateTagBuilder(FSGItemTags.AZALEAS)
                 .add(Items.AZALEA)
                 .add(Items.FLOWERING_AZALEA);
+        getOrCreateTagBuilder(ItemTags.PIGLIN_LOVED)
+                .add(FSGItems.GOLD_GENERATOR)
+                .add(FSGItems.GOLD_GENERATOR_8X);
     }
 }

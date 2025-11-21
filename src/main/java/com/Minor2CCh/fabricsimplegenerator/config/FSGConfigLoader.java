@@ -17,13 +17,13 @@ public class FSGConfigLoader {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String FILENAME = FabricSimpleGenerator.MOD_ID +".json";
     private static final Path CONFIG_PATH = Path.of(new File(DIR,FILENAME).getPath());
-    public static final Long[] defaultCapacity = {100000L, 80000L, 200000L, 400000L, 800000L, 1600000L, 400000L, 200000L};
-    public static final Long[] defaultExtract = {50L, 25L, 100L, 200L, 400L, 800L, 80L, 50L};
-    public static final Long[] defaultGenerate = {10L, 5L, 20L, 40L, 80L, 160L, 20L, 10L};
+    public static final Long[] defaultCapacity = {100000L, 80000L, 200000L, 400000L, 800000L, 1600000L, 400000L, 200000L, 1200000L};
+    public static final Long[] defaultExtract = {50L, 25L, 100L, 200L, 400L, 800L, 80L, 50L, 100L};
+    public static final Long[] defaultGenerate = {10L, 5L, 20L, 40L, 80L, 160L, 20L, 10L, 20L};
     public static final int defaultBioTime = 1000;
+    public static final boolean defaultCanCurseRemoval = true;
     private static FSGConfig modConfig;
     public static void load(){
-        System.out.println(CONFIG_PATH);
         if (Files.exists(CONFIG_PATH)) {
             try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
                 modConfig = GSON.fromJson(reader, FSGConfig.class);

@@ -1,9 +1,7 @@
 package com.Minor2CCh.fabricsimplegenerator.registry;
 
 import com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator;
-import com.Minor2CCh.fabricsimplegenerator.block.entity.BiomassGeneratorBlockEntity;
-import com.Minor2CCh.fabricsimplegenerator.block.entity.FuelGeneratorBlockEntity;
-import com.Minor2CCh.fabricsimplegenerator.block.entity.SculkGeneratorBlockEntity;
+import com.Minor2CCh.fabricsimplegenerator.block.entity.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
@@ -13,7 +11,7 @@ import team.reborn.energy.api.EnergyStorage;
 
 
 public class FSGBlockEntityTypes {
-    public static BlockEntityType<FuelGeneratorBlockEntity> FUEL_GENERATOR_BLOCK_ENTITY = register("fuel_generator", BlockEntityType.Builder.create(FuelGeneratorBlockEntity::new,
+    public static final BlockEntityType<FuelGeneratorBlockEntity> FUEL_GENERATOR_BLOCK_ENTITY = register("fuel_generator", BlockEntityType.Builder.create(FuelGeneratorBlockEntity::new,
             FSGBlocks.IRON_GENERATOR,
             FSGBlocks.COPPER_GENERATOR,
             FSGBlocks.GOLD_GENERATOR,
@@ -28,15 +26,20 @@ public class FSGBlockEntityTypes {
             FSGBlocks.NETHERITE_GENERATOR_8X,
             FSGBlocks.NETHERITE_GENERATOR_64X
     ));
-    public static BlockEntityType<SculkGeneratorBlockEntity> SCULK_GENERATOR_BLOCK_ENTITY = register("sculk_generator", BlockEntityType.Builder.create(SculkGeneratorBlockEntity::new,
+    public static final BlockEntityType<SculkGeneratorBlockEntity> SCULK_GENERATOR_BLOCK_ENTITY = register("sculk_generator", BlockEntityType.Builder.create(SculkGeneratorBlockEntity::new,
             FSGBlocks.SCULK_GENERATOR,
             FSGBlocks.SCULK_GENERATOR_8X,
             FSGBlocks.SCULK_GENERATOR_64X
     ));
-    public static BlockEntityType<BiomassGeneratorBlockEntity> BIOMASS_GENERATOR_BLOCK_ENTITY = register("biomass_generator", BlockEntityType.Builder.create(BiomassGeneratorBlockEntity::new,
+    public static final BlockEntityType<BiomassGeneratorBlockEntity> BIOMASS_GENERATOR_BLOCK_ENTITY = register("biomass_generator", BlockEntityType.Builder.create(BiomassGeneratorBlockEntity::new,
             FSGBlocks.BIOMASS_GENERATOR,
             FSGBlocks.BIOMASS_GENERATOR_8X,
             FSGBlocks.BIOMASS_GENERATOR_64X
+    ));
+    public static final BlockEntityType<EnchantmentGeneratorBlockEntity> ENCHANTMENT_GENERATOR_BLOCK_ENTITY = register("enchantment_generator", BlockEntityType.Builder.create(EnchantmentGeneratorBlockEntity::new,
+            FSGBlocks.ENCHANTMENT_GENERATOR,
+            FSGBlocks.ENCHANTMENT_GENERATOR_8X,
+            FSGBlocks.ENCHANTMENT_GENERATOR_64X
     ));
     public static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType.Builder<T> builder){
         Identifier id = Identifier.of(FabricSimpleGenerator.MOD_ID, name);
@@ -46,6 +49,7 @@ public class FSGBlockEntityTypes {
         EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, FUEL_GENERATOR_BLOCK_ENTITY);
         EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, SCULK_GENERATOR_BLOCK_ENTITY);
         EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, BIOMASS_GENERATOR_BLOCK_ENTITY);
+        EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, ENCHANTMENT_GENERATOR_BLOCK_ENTITY);
 
     }
 }

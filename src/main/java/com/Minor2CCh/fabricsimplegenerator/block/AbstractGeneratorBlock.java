@@ -16,15 +16,18 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public abstract class AbstractGeneratorBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty LIT = Properties.LIT;
-    protected GeneratorTier gTier;
-    protected int gMul;
-    protected AbstractGeneratorBlock(Settings settings) {
+    protected final GeneratorTier gTier;
+    protected final int gMul;
+    protected AbstractGeneratorBlock(GeneratorTier gTier, int gMul, Settings settings) {
         super(settings);
+        this.gTier = gTier;
+        this.gMul = gMul;
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(LIT, false));
     }
     @Override
@@ -45,7 +48,7 @@ public abstract class AbstractGeneratorBlock extends BlockWithEntity {
         return this.gMul;
     }
     public static GeneratorTier getTier(Block block){
-        return block instanceof AbstractGeneratorBlock ? ((AbstractGeneratorBlock) block).getTier() : null;
+        return block instanceof AbstractGeneratorBlock ? ((AbstractGeneratorBlock) block).getTier() : GeneratorTier.IRON;
     }
     public static int getMul(Block block){
         return block instanceof AbstractGeneratorBlock ? ((AbstractGeneratorBlock) block).getMul() : 1;
@@ -92,5 +95,23 @@ public abstract class AbstractGeneratorBlock extends BlockWithEntity {
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }
+    }
+    @Override
+    protected boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        BlockEntity be = world.getBlockEntity(pos);
+        if(be instanceof AbstractGeneratorBlockEntity generator){
+            long amount = generator.getAmount();
+            long maxCapacity = generator.getCapacity();
+            double percentage = amount * 1.0 / maxCapacity;
+            if(amount > 0){
+                return MathHelper.clamp(MathHelper.floor(1 + percentage * 14), 1, 15);
+            }
+        }
+        return 0;
     }
 }

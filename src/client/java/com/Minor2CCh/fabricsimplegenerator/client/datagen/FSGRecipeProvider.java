@@ -5,6 +5,7 @@ import com.Minor2CCh.fabricsimplegenerator.registry.FSGItemTags;
 import com.Minor2CCh.fabricsimplegenerator.registry.FSGItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SmithingTransformRecipeJsonBuilder;
@@ -97,6 +98,17 @@ public class FSGRecipeProvider extends FabricRecipeProvider {
                 .input('A', Items.REDSTONE_BLOCK)
                 .criterion("has_item", conditionsFromItem(FSGItems.COPPER_GENERATOR))
                 .offerTo(exporter, Identifier.of(FabricSimpleGenerator.MOD_ID, "biomass_generator"));
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, FSGItems.ENCHANTMENT_GENERATOR)
+                .pattern("L#L")
+                .pattern("R$R")
+                .pattern("LAL")
+                .input('#', Items.ENCHANTING_TABLE)
+                .input('R', Items.ENCHANTED_BOOK)
+                .input('L', ConventionalItemTags.STORAGE_BLOCKS_LAPIS)
+                .input('$', FSGItems.IRON_GENERATOR)
+                .input('A', Items.REDSTONE_BLOCK)
+                .criterion("has_item", conditionsFromItem(FSGItems.IRON_GENERATOR))
+                .offerTo(exporter, Identifier.of(FabricSimpleGenerator.MOD_ID, "enchantment_generator"));
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, FSGItems.IRON_GENERATOR_8X)
                 .pattern("###")
                 .pattern("#$#")
@@ -161,6 +173,14 @@ public class FSGRecipeProvider extends FabricRecipeProvider {
                 .input('$', Items.END_CRYSTAL)
                 .criterion("has_item", conditionsFromItem(FSGItems.BIOMASS_GENERATOR))
                 .offerTo(exporter, Identifier.of(FabricSimpleGenerator.MOD_ID, "biomass_generator_8x"));
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, FSGItems.ENCHANTMENT_GENERATOR_8X)
+                .pattern("###")
+                .pattern("#$#")
+                .pattern("###")
+                .input('#', FSGItems.ENCHANTMENT_GENERATOR)
+                .input('$', Items.END_CRYSTAL)
+                .criterion("has_item", conditionsFromItem(FSGItems.ENCHANTMENT_GENERATOR))
+                .offerTo(exporter, Identifier.of(FabricSimpleGenerator.MOD_ID, "enchantment_generator_8x"));
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, FSGItems.NETHERITE_GENERATOR_64X)
                 .pattern("###")
                 .pattern("#$#")
@@ -185,6 +205,14 @@ public class FSGRecipeProvider extends FabricRecipeProvider {
                 .input('$', Items.NETHER_STAR)
                 .criterion("has_item", conditionsFromItem(FSGItems.BIOMASS_GENERATOR_8X))
                 .offerTo(exporter, Identifier.of(FabricSimpleGenerator.MOD_ID, "biomass_generator_64x"));
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, FSGItems.ENCHANTMENT_GENERATOR_64X)
+                .pattern("###")
+                .pattern("#$#")
+                .pattern("###")
+                .input('#', FSGItems.ENCHANTMENT_GENERATOR_8X)
+                .input('$', Items.NETHER_STAR)
+                .criterion("has_item", conditionsFromItem(FSGItems.ENCHANTMENT_GENERATOR_8X))
+                .offerTo(exporter, Identifier.of(FabricSimpleGenerator.MOD_ID, "enchantment_generator_64x"));
 
     }
 }

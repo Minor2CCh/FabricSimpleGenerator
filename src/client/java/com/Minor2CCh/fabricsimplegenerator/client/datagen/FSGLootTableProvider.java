@@ -14,25 +14,28 @@ public class FSGLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        addDrop(FSGBlocks.IRON_GENERATOR);
-        addDrop(FSGBlocks.COPPER_GENERATOR);
-        addDrop(FSGBlocks.GOLD_GENERATOR);
-        addDrop(FSGBlocks.DIAMOND_GENERATOR);
-        addDrop(FSGBlocks.EMERALD_GENERATOR);
-        addDrop(FSGBlocks.NETHERITE_GENERATOR);
-        addDrop(FSGBlocks.SCULK_GENERATOR);
-        addDrop(FSGBlocks.BIOMASS_GENERATOR);
-        addDrop(FSGBlocks.IRON_GENERATOR_8X);
-        addDrop(FSGBlocks.COPPER_GENERATOR_8X);
-        addDrop(FSGBlocks.GOLD_GENERATOR_8X);
-        addDrop(FSGBlocks.DIAMOND_GENERATOR_8X);
-        addDrop(FSGBlocks.EMERALD_GENERATOR_8X);
-        addDrop(FSGBlocks.NETHERITE_GENERATOR_8X);
-        addDrop(FSGBlocks.SCULK_GENERATOR_8X);
-        addDrop(FSGBlocks.BIOMASS_GENERATOR_8X);
-        addDrop(FSGBlocks.NETHERITE_GENERATOR_64X);
-        addDrop(FSGBlocks.SCULK_GENERATOR_64X);
-        addDrop(FSGBlocks.BIOMASS_GENERATOR_64X);
+        addDrop(FSGBlocks.IRON_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.COPPER_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.GOLD_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.DIAMOND_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.EMERALD_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.NETHERITE_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.SCULK_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.BIOMASS_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.ENCHANTMENT_GENERATOR, this::nameableContainerDrops);
+        addDrop(FSGBlocks.IRON_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.COPPER_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.GOLD_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.DIAMOND_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.EMERALD_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.NETHERITE_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.SCULK_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.BIOMASS_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.ENCHANTMENT_GENERATOR_8X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.NETHERITE_GENERATOR_64X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.SCULK_GENERATOR_64X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.BIOMASS_GENERATOR_64X, this::nameableContainerDrops);
+        addDrop(FSGBlocks.ENCHANTMENT_GENERATOR_64X, this::nameableContainerDrops);
         this.lootTables.forEach((id, lootTable) -> {
             lootTable.randomSequenceId(id.getValue());
         });

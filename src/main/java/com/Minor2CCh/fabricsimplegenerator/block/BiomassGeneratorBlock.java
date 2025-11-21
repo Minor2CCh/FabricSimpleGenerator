@@ -2,6 +2,7 @@ package com.Minor2CCh.fabricsimplegenerator.block;
 
 import com.Minor2CCh.fabricsimplegenerator.block.entity.BiomassGeneratorBlockEntity;
 import com.Minor2CCh.fabricsimplegenerator.registry.FSGBlockEntityTypes;
+import com.Minor2CCh.fabricsimplegenerator.registry.FSGStats;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
@@ -26,9 +27,7 @@ public class BiomassGeneratorBlock extends AbstractGeneratorBlock{
             instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(block -> Optional.of(GeneratorTier.BIOMASS)), createSettingsCodec())
                     .apply(instance, (gTier, settings) -> new BiomassGeneratorBlock(gTier.orElse(GeneratorTier.BIOMASS), 1, settings)));
     public BiomassGeneratorBlock(GeneratorTier gTier, int gMul, Settings settings) {
-        super(settings);
-        this.gTier = gTier;
-        this.gMul = gMul;
+        super(gTier, gMul, settings);
     }
 
     @Override
@@ -40,6 +39,7 @@ public class BiomassGeneratorBlock extends AbstractGeneratorBlock{
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof BiomassGeneratorBlockEntity) {
             NamedScreenHandlerFactory screenHandlerFactory = world.getBlockState(pos).createScreenHandlerFactory(world, pos);
+            player.incrementStat(FSGStats.INTERACT_WITH_BIOMASS_GENERATOR);
 
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);

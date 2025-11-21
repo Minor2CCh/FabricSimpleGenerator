@@ -24,6 +24,7 @@ public class FSGItemGroups {
                 output.add(FSGItems.NETHERITE_GENERATOR);
                 output.add(FSGItems.SCULK_GENERATOR);
                 output.add(FSGItems.BIOMASS_GENERATOR);
+                output.add(FSGItems.ENCHANTMENT_GENERATOR);
                 output.add(FSGItems.IRON_GENERATOR_8X);
                 output.add(FSGItems.COPPER_GENERATOR_8X);
                 output.add(FSGItems.GOLD_GENERATOR_8X);
@@ -32,9 +33,11 @@ public class FSGItemGroups {
                 output.add(FSGItems.NETHERITE_GENERATOR_8X);
                 output.add(FSGItems.SCULK_GENERATOR_8X);
                 output.add(FSGItems.BIOMASS_GENERATOR_8X);
+                output.add(FSGItems.ENCHANTMENT_GENERATOR_8X);
                 output.add(FSGItems.NETHERITE_GENERATOR_64X);
                 output.add(FSGItems.SCULK_GENERATOR_64X);
                 output.add(FSGItems.BIOMASS_GENERATOR_64X);
+                output.add(FSGItems.ENCHANTMENT_GENERATOR_64X);
             })
             .build());
     private static ItemGroup register(String name, ItemGroup itemGroup){

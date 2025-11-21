@@ -21,6 +21,7 @@ public class FSGModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerCooker(FSGBlocks.NETHERITE_GENERATOR, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.SCULK_GENERATOR, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.BIOMASS_GENERATOR, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
+        blockStateModelGenerator.registerCooker(FSGBlocks.ENCHANTMENT_GENERATOR, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.IRON_GENERATOR_8X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.COPPER_GENERATOR_8X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.GOLD_GENERATOR_8X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
@@ -29,9 +30,11 @@ public class FSGModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerCooker(FSGBlocks.NETHERITE_GENERATOR_8X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.SCULK_GENERATOR_8X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.BIOMASS_GENERATOR_8X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
+        blockStateModelGenerator.registerCooker(FSGBlocks.ENCHANTMENT_GENERATOR_8X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.NETHERITE_GENERATOR_64X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.SCULK_GENERATOR_64X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
         blockStateModelGenerator.registerCooker(FSGBlocks.BIOMASS_GENERATOR_64X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
+        blockStateModelGenerator.registerCooker(FSGBlocks.ENCHANTMENT_GENERATOR_64X, TexturedModel.makeFactory(TextureMap::sideFrontTop, Models.ORIENTABLE));
 
     }
 

@@ -1,7 +1,6 @@
 package com.Minor2CCh.fabricsimplegenerator.screen;
 
 import com.Minor2CCh.fabricsimplegenerator.block.entity.BiomassGeneratorBlockEntity;
-import com.Minor2CCh.fabricsimplegenerator.block.entity.FuelGeneratorBlockEntity;
 import com.Minor2CCh.fabricsimplegenerator.registry.FSGScreenHandlers;
 import com.Minor2CCh.fabricsimplegenerator.screen.slot.GeneratorBioSlot;
 import net.minecraft.entity.player.PlayerInventory;

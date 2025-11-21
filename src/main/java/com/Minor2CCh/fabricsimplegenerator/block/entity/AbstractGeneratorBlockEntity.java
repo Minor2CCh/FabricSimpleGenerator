@@ -1,7 +1,10 @@
 package com.Minor2CCh.fabricsimplegenerator.block.entity;
 
+import com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator;
 import com.Minor2CCh.fabricsimplegenerator.block.AbstractGeneratorBlock;
 import com.Minor2CCh.fabricsimplegenerator.block.GeneratorTier;
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
+import net.fabricmc.fabric.api.transfer.v1.item.base.SingleStackStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -14,34 +17,38 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.reborn.energy.api.EnergyStorage;
+import team.reborn.energy.api.EnergyStorageUtil;
 import team.reborn.energy.api.base.SimpleEnergyStorage;
 
 
 public abstract class AbstractGeneratorBlockEntity extends LockableContainerBlockEntity implements SidedInventory {
-    public long CAPACITY;
-    public long MAX_INSERT;
-    public long MAX_EXTRACT;
-    public long TICK_GENERATE;
-    public SimpleEnergyStorage energyStorage;
-    private long readCapacity = 0; // 保存したい情報
+    protected final long CAPACITY;
+    protected final long MAX_INSERT;
+    protected final long MAX_EXTRACT;
+    protected final long TICK_GENERATE;
+    public final SimpleEnergyStorage energyStorage;
     public static final int DEC_BURN_TIME = 4;
     private int burnTime = 0;
     private int startBurnTime = 0;
-    public static final int PROPERTY_SIZE = 11;
+    public static final int PROPERTY_SIZE = 14;
     public static final int BURN_TIME_INDEX = 0;
     public static final int AMOUNT_INDEX = 1;
     public static final int CAPACITY_INDEX = 5;
     public static final int START_BURN_TIME_INDEX = 9;
+    public static final int TICK_GENERATE_INDEX = 10;
+
+    public static final String CONTAINER_NAME = "container." + Identifier.of(FabricSimpleGenerator.MOD_ID, "unknown_generator").toString().replace(':', '.');
 
     protected DefaultedList<ItemStack> inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-    //@Nullable
-    //FurnaceBlockEntity.createFuelTimeMap();
+    public static final int BATTERY_SLOT_INDEX = 1;
     protected final PropertyDelegate propertyDelegate = new PropertyDelegate() {
         @Override
         public int get(int index) {
@@ -56,7 +63,10 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
                 case (CAPACITY_INDEX+2) -> (int) ((CAPACITY >> 32) & (0xFFFFL));
                 case (CAPACITY_INDEX+3) -> (int) ((CAPACITY >> 48) & (0xFFFFL));
                 case START_BURN_TIME_INDEX -> Math.min(32767, startBurnTime);
-                case 10 -> (int) TICK_GENERATE;
+                case (TICK_GENERATE_INDEX) -> (int) (getTickGenerate() & 0xFFFFL);
+                case (TICK_GENERATE_INDEX+1) -> (int) ((getTickGenerate() >> 16) & (0xFFFFL));
+                case (TICK_GENERATE_INDEX+2) -> (int) ((getTickGenerate() >> 32) & (0xFFFFL));
+                case (TICK_GENERATE_INDEX+3) -> (int) ((getTickGenerate() >> 48) & (0xFFFFL));
                 default -> 0;
             };
         }
@@ -95,16 +105,14 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
             return PROPERTY_SIZE;
         }
     };
-    public AbstractGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public AbstractGeneratorBlockEntity(BlockEntityType<?> type, @NotNull GeneratorTier gTier, int gMul, BlockPos pos, BlockState state) {
         super(type, pos, state);
-    }
-    protected void setGeneratorSetting(GeneratorTier gTier, int gMul){
         this.CAPACITY = gTier.CAPACITY * gMul;
         this.MAX_INSERT = gTier.MAX_INSERT * gMul;
         this.MAX_EXTRACT = gTier.MAX_EXTRACT * gMul;
         this.TICK_GENERATE = gTier.TICK_GENERATE * gMul;
         this.energyStorage =
-                new SimpleEnergyStorage(CAPACITY, 0, MAX_EXTRACT) {
+                new SimpleEnergyStorage(this.CAPACITY, 0, this.MAX_EXTRACT) {
                     @Override
                     protected void onFinalCommit() {
                         markDirty();
@@ -114,12 +122,13 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
-        this.readCapacity = nbt.getLong("readCapacity");
-        this.energyStorage.amount = this.readCapacity;
+        this.energyStorage.amount = nbt.getLong("readCapacity");
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         this.burnTime = nbt.getInt("BurnTime");
         this.startBurnTime = nbt.getInt("StartBurnTime");
         Inventories.readNbt(nbt, this.inventory, registryLookup);
+
+
     }
     @Override
     protected DefaultedList<ItemStack> getHeldStacks() {
@@ -134,7 +143,7 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
     @Override
     public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
-        nbt.putLong("readCapacity", this.readCapacity);
+        nbt.putLong("readCapacity", this.energyStorage.amount);
         nbt.putInt("BurnTime", this.burnTime);
         nbt.putInt("StartBurnTime", this.startBurnTime);
         Inventories.writeNbt(nbt, this.inventory, registryLookup);
@@ -143,13 +152,16 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
         return createNbt(registryLookup); // クライアントに初期データ送信
     }
-    public void setCapacity(long value) {
-        this.readCapacity = value;
+    public void setAmount(long value) {
+        this.energyStorage.amount = value;
         markDirty(); // 変更を保存対象にする
     }
 
+    public long getAmount() {
+        return this.energyStorage.amount;
+    }
     public long getCapacity() {
-        return this.readCapacity;
+        return this.energyStorage.getCapacity();
     }
     public void setBurnTime(int value) {
         this.burnTime = value;
@@ -169,17 +181,20 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
     }
     @Override
     public int size() {
-        return 1;
+        return 2;
     }
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return true;
+        return slot != BATTERY_SLOT_INDEX;
     }
     @Override
     public boolean canExtract(int slot, ItemStack stack, Direction dir){
+        if(slot == BATTERY_SLOT_INDEX){
+            return false;
+        }
         return (stack != null && !ingredientUsable(stack));
     }
-
+    @Override
     public int[] getAvailableSlots(Direction side){
         return new int[] {0};
     }
@@ -203,12 +218,11 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
         if (!world.isClient) {
             if(state.getBlock() instanceof AbstractGeneratorBlock){
                 if(getBurnTime() > 0){
-                    energyStorage.amount = getCapacity();
-                    if(energyStorage.getAmount() != CAPACITY){
-                        int tickMul = decisionGenerateMul(TICK_GENERATE, energyStorage.amount, CAPACITY, getBurnTime());
-                        long gen = Math.round(((double)TICK_GENERATE) * tickMul / DEC_BURN_TIME);
-                        energyStorage.amount = Math.min(energyStorage.amount+gen, CAPACITY);
-                        setCapacity(energyStorage.getAmount());
+                    long amount = getAmount();
+                    if(amount != getCapacity()){
+                        int tickMul = decisionGenerateMul(getTickGenerate(), amount, getCapacity(), getBurnTime());
+                        long gen = Math.round(((double)getTickGenerate()) * tickMul / DEC_BURN_TIME);
+                        setAmount(Math.min(amount+gen, getCapacity()));
                         decBurnTime(tickMul);
                     }
                 }
@@ -228,10 +242,18 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
                     world.setBlockState(pos, state.with(AbstractGeneratorBlock.LIT, false));
                 }
                 sendEnergy(world, pos, state);
+
+                ItemStack batteryStack = inventory.get(BATTERY_SLOT_INDEX);
+                if(!batteryStack.isEmpty() && EnergyStorageUtil.isEnergyStorage(batteryStack)){
+                    sendStackEnergy(batteryStack);
+                }
             }
 
 
         }
+    }
+    public long getTickGenerate(){
+        return TICK_GENERATE;
     }
     protected ItemStack consumeStack(World world, BlockPos pos, ItemStack stack){
         if(!stack.getRecipeRemainder().isEmpty()){
@@ -272,11 +294,53 @@ public abstract class AbstractGeneratorBlockEntity extends LockableContainerBloc
                 long extracted = sendStorage.extract(inserted, tx);
                 if (extracted == inserted) {
                     tx.commit();
+                    this.markDirty();
                 }
             }
         }
-        this.setCapacity(this.energyStorage.getAmount());
-        this.markDirty();
+    }
+    protected void sendStackEnergy(ItemStack stack){
+        if(EnergyStorageUtil.isEnergyStorage(stack)){
+            AbstractGeneratorBlockEntity be = this;
+            SingleStackStorage slotStorage = new SingleStackStorage() {
+                @Override
+                protected ItemStack getStack() {
+                    // 直接参照することで write-back が可能になる
+                    return inventory.get(BATTERY_SLOT_INDEX);
+                }
+
+                @Override
+                protected void setStack(ItemStack stack) {
+                    inventory.set(BATTERY_SLOT_INDEX, stack);
+                }
+
+                @Override
+                protected void onFinalCommit() {
+                    // トランザクション確定後に markDirty する（保存のトリガ）
+                    be.markDirty();
+                }
+            };
+
+            ContainerItemContext ctx = ContainerItemContext.ofSingleSlot(slotStorage);
+
+            var itemEnergy = ctx.find(EnergyStorage.ITEM); // nullable
+            if (itemEnergy == null) return;
+            try (Transaction tx = Transaction.openOuter()) {
+                long moved = EnergyStorageUtil.move(this.energyStorage, itemEnergy, this.MAX_EXTRACT, tx);
+                if (moved > 0) {
+                    tx.commit();
+                }
+            }
+        }
+    }
+    public static String getTranslationKey(BlockEntityType<?> blockEntityType){
+        if(blockEntityType.getRegistryEntry() != null && blockEntityType.getRegistryEntry().getKey().isPresent()){
+            Identifier key = blockEntityType.getRegistryEntry().getKey().get().getValue();
+            return "container." + key.toString().replace(':', '.');
+
+        }else{
+            return CONTAINER_NAME;
+        }
     }
 
 }
