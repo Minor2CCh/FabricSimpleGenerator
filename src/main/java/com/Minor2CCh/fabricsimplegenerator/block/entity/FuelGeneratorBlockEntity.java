@@ -13,26 +13,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 
 public class FuelGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
-    public FuelGeneratorBlockEntity(@Nullable GeneratorTier gTier, int gMul, BlockPos pos, BlockState state) {
-        super(FSGBlockEntityTypes.FUEL_GENERATOR_BLOCK_ENTITY, pos, state);
-        if(gTier != null){
-            setGeneratorSetting(gTier, gMul);
-        }
+    public static final String CONTAINER_NAME = getTranslationKey(FSGBlockEntityTypes.FUEL_GENERATOR_BLOCK_ENTITY);
+    public FuelGeneratorBlockEntity(@NotNull GeneratorTier gTier, int gMul, BlockPos pos, BlockState state) {
+        super(FSGBlockEntityTypes.FUEL_GENERATOR_BLOCK_ENTITY, gTier, gMul, pos, state);
     }
 
     public FuelGeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(FSGBlockEntityTypes.FUEL_GENERATOR_BLOCK_ENTITY, pos, state);
-        GeneratorTier tempTier = FuelGeneratorBlock.getTier(state.getBlock());
-        int tempMul = FuelGeneratorBlock.getMul(state.getBlock());
-        if(tempTier != null){
-            setGeneratorSetting(tempTier, tempMul);
-        }
+        this(FuelGeneratorBlock.getTier(state.getBlock()), FuelGeneratorBlock.getMul(state.getBlock()), pos, state);
     }
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -45,7 +39,7 @@ public class FuelGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
 
     @Override
     protected Text getContainerName() {
-        return Text.translatable("container.fsg.generator.fuel");
+        return Text.translatable(CONTAINER_NAME);
     }
     // 毎tick実行されるメソッド
 

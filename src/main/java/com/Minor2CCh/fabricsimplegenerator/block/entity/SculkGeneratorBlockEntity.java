@@ -20,25 +20,19 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 public class SculkGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
+    public static final String CONTAINER_NAME = getTranslationKey(FSGBlockEntityTypes.SCULK_GENERATOR_BLOCK_ENTITY);
     private static volatile Map<Item, Integer> sculkTimes;
-    public SculkGeneratorBlockEntity(@Nullable GeneratorTier gTier, int gMul, BlockPos pos, BlockState state) {
-        super(FSGBlockEntityTypes.SCULK_GENERATOR_BLOCK_ENTITY, pos, state);
-        if(gTier != null){
-            setGeneratorSetting(gTier, gMul);
-        }
+    public SculkGeneratorBlockEntity(@NotNull GeneratorTier gTier, int gMul, BlockPos pos, BlockState state) {
+        super(FSGBlockEntityTypes.SCULK_GENERATOR_BLOCK_ENTITY, gTier, gMul, pos, state);
     }
     public SculkGeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(FSGBlockEntityTypes.SCULK_GENERATOR_BLOCK_ENTITY, pos, state);
-        GeneratorTier tempTier = SculkGeneratorBlock.getTier(state.getBlock());
-        int tempMul = SculkGeneratorBlock.getMul(state.getBlock());
-        if(tempTier != null){
-            setGeneratorSetting(tempTier, tempMul);
-        }
+        this(SculkGeneratorBlock.getTier(state.getBlock()), SculkGeneratorBlock.getMul(state.getBlock()), pos, state);
     }
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -50,7 +44,7 @@ public class SculkGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
     }
     @Override
     protected Text getContainerName() {
-        return Text.translatable("container.fsg.generator.sculk");
+        return Text.translatable(CONTAINER_NAME);
     }
 
     public static boolean sculkUsable(ItemStack stack){

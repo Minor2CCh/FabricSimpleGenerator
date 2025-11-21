@@ -1,10 +1,7 @@
 package com.Minor2CCh.fabricsimplegenerator.client;
 
 import com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator;
-import com.Minor2CCh.fabricsimplegenerator.block.AbstractGeneratorBlock;
-import com.Minor2CCh.fabricsimplegenerator.block.BiomassGeneratorBlock;
-import com.Minor2CCh.fabricsimplegenerator.block.FuelGeneratorBlock;
-import com.Minor2CCh.fabricsimplegenerator.block.SculkGeneratorBlock;
+import com.Minor2CCh.fabricsimplegenerator.block.*;
 import com.Minor2CCh.fabricsimplegenerator.client.registry.FSGHandledScreens;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -22,10 +19,12 @@ public class FabricSimpleGeneratorClient implements ClientModInitializer {
     public static final String MAX_CAPACITY_FORMAT = String.format("item.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "capacity");
     public static final String MAX_EXTRACT_FORMAT = String.format("item.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "extract");
     public static final String TICK_GENERATE_FORMAT = String.format("item.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "tick_generate");
+    public static final String TICK_GENERATE_FORMAT_ENCHANTMENT_GENERATOR = String.format("item.%s.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "tick_generate", "enchanting");
     public static final String INGREDIENT_FORMAT = String.format("item.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "ingredient");
     public static final String INGREDIENT_FUEL_FORMAT = String.format("item.%s.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "ingredient", "fuel");
     public static final String INGREDIENT_SCULK_FORMAT = String.format("item.%s.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "ingredient", "sculk");
     public static final String INGREDIENT_BIO_FORMAT = String.format("item.%s.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "ingredient", "bio");
+    public static final String INGREDIENT_ENCHANTMENT_FORMAT = String.format("item.%s.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "ingredient", "enchanting");
     public static final String INGREDIENT_UNDEFINED_FORMAT = String.format("item.%s.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "ingredient", "undefined");
     public static final String AMOUNT_FORMAT = String.format("item.%s.%s.%s", FabricSimpleGenerator.MOD_ID, "generator", "amount");
     @Override
@@ -37,7 +36,11 @@ public class FabricSimpleGeneratorClient implements ClientModInitializer {
                      if (hasShiftDown) {
                         lines.add(Text.translatable(MAX_CAPACITY_FORMAT, adjustEnergyUnit(generatorBlock.getCapacity())).formatted(Formatting.GOLD));
                          lines.add(Text.translatable(MAX_EXTRACT_FORMAT, adjustEnergyUnit(generatorBlock.getExtract())).formatted(Formatting.GOLD));
-                         lines.add(Text.translatable(TICK_GENERATE_FORMAT, (adjustEnergyUnit(generatorBlock.getTickGenerate())+"/t")).formatted(Formatting.GOLD));
+                         if(generatorBlock instanceof EnchantmentGeneratorBlock){
+                             lines.add(Text.translatable(TICK_GENERATE_FORMAT, Text.translatable(TICK_GENERATE_FORMAT_ENCHANTMENT_GENERATOR)).formatted(Formatting.GOLD));
+                         }else{
+                             lines.add(Text.translatable(TICK_GENERATE_FORMAT, (adjustEnergyUnit(generatorBlock.getTickGenerate())+"/t")).formatted(Formatting.GOLD));
+                         }
                          lines.add(Text.translatable(INGREDIENT_FORMAT, Text.translatable(getIngredientText(generatorBlock))).formatted(Formatting.GOLD));
                     } else {
                         lines.add(Text.translatable(TOOLTIP_HIDE));
@@ -48,7 +51,7 @@ public class FabricSimpleGeneratorClient implements ClientModInitializer {
         FSGHandledScreens.init();
     }
     public static String adjustEnergyUnit(long capacity){
-        String[] capUnit = new String[]{"E", "kE", "ME", "GE", "TE"};
+        String[] capUnit = new String[]{"E", "kE", "ME", "GE", "TE", "PE"};
         long[] capAdjust = new long[capUnit.length+1];//{(long)Math.pow(10, 0), (long)Math.pow(10, 3), (long)Math.pow(10, 6), (long)Math.pow(10, 9), (long)Math.pow(10, 12), (long)Math.pow(10, 15)};
         for(int i=0;i < capAdjust.length;i++){
             capAdjust[i] = (long)Math.pow(10, i*3);
@@ -72,6 +75,8 @@ public class FabricSimpleGeneratorClient implements ClientModInitializer {
             return INGREDIENT_SCULK_FORMAT;
         if(block instanceof BiomassGeneratorBlock)
             return INGREDIENT_BIO_FORMAT;
+        if(block instanceof EnchantmentGeneratorBlock)
+            return INGREDIENT_ENCHANTMENT_FORMAT;
         return INGREDIENT_UNDEFINED_FORMAT;
     }
 }

@@ -34,6 +34,15 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     maven {
+        name = "REI"
+        url = "https://maven.shedaniel.me/"
+        content {
+            includeGroup "me.shedaniel"
+            includeGroup "me.shedaniel.cloth"
+            includeGroup "dev.architectury"
+        }
+    }
+    maven {
         url "https://cursemaven.com"
     }
 }
@@ -46,6 +55,7 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "curse.maven:jade-324717:6738760"
+    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
     include modApi("teamreborn:energy:${energy_version}")
 }
 

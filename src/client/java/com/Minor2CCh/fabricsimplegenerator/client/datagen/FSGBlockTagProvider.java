@@ -23,6 +23,7 @@ public class FSGBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(FSGBlocks.EMERALD_GENERATOR)
                 .add(FSGBlocks.NETHERITE_GENERATOR)
                 .add(FSGBlocks.SCULK_GENERATOR)
+                .add(FSGBlocks.ENCHANTMENT_GENERATOR)
                 .add(FSGBlocks.IRON_GENERATOR_8X)
                 .add(FSGBlocks.COPPER_GENERATOR_8X)
                 .add(FSGBlocks.GOLD_GENERATOR_8X)
@@ -30,11 +31,16 @@ public class FSGBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(FSGBlocks.EMERALD_GENERATOR_8X)
                 .add(FSGBlocks.NETHERITE_GENERATOR_8X)
                 .add(FSGBlocks.SCULK_GENERATOR_8X)
+                .add(FSGBlocks.ENCHANTMENT_GENERATOR_8X)
                 .add(FSGBlocks.NETHERITE_GENERATOR_64X)
-                .add(FSGBlocks.SCULK_GENERATOR_64X);
+                .add(FSGBlocks.SCULK_GENERATOR_64X)
+                .add(FSGBlocks.ENCHANTMENT_GENERATOR_64X);
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
                 .add(FSGBlocks.BIOMASS_GENERATOR)
                 .add(FSGBlocks.BIOMASS_GENERATOR_8X)
                 .add(FSGBlocks.BIOMASS_GENERATOR_64X);
+        getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS)
+                .add(FSGBlocks.GOLD_GENERATOR)
+                .add(FSGBlocks.GOLD_GENERATOR_8X);
     }
 }

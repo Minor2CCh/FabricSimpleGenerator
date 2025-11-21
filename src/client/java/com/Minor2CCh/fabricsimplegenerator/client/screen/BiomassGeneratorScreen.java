@@ -1,8 +1,6 @@
 package com.Minor2CCh.fabricsimplegenerator.client.screen;
 
-import com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator;
 import com.Minor2CCh.fabricsimplegenerator.screen.BiomassGeneratorScreenHandler;
-import com.Minor2CCh.fabricsimplegenerator.screen.SculkGeneratorScreenHandler;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;

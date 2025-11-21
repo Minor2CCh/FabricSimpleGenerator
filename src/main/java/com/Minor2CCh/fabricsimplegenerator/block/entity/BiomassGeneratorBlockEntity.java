@@ -13,24 +13,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
 public class BiomassGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
+    public static final String CONTAINER_NAME = getTranslationKey(FSGBlockEntityTypes.BIOMASS_GENERATOR_BLOCK_ENTITY);
     public static final float BIO_TIME_MUL = 1000.0F;
-    public BiomassGeneratorBlockEntity(@Nullable GeneratorTier gTier, int gMul, BlockPos pos, BlockState state) {
-        super(FSGBlockEntityTypes.BIOMASS_GENERATOR_BLOCK_ENTITY, pos, state);
-        if(gTier != null){
-            setGeneratorSetting(gTier, gMul);
-        }
+    public BiomassGeneratorBlockEntity(@NotNull GeneratorTier gTier, int gMul, BlockPos pos, BlockState state) {
+        super(FSGBlockEntityTypes.BIOMASS_GENERATOR_BLOCK_ENTITY, gTier, gMul, pos, state);
     }
     public BiomassGeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(FSGBlockEntityTypes.BIOMASS_GENERATOR_BLOCK_ENTITY, pos, state);
-        GeneratorTier tempTier = BiomassGeneratorBlock.getTier(state.getBlock());
-        int tempMul = BiomassGeneratorBlock.getMul(state.getBlock());
-        if(tempTier != null){
-            setGeneratorSetting(tempTier, tempMul);
-        }
+        this(BiomassGeneratorBlock.getTier(state.getBlock()), BiomassGeneratorBlock.getMul(state.getBlock()), pos, state);
     }
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -42,7 +36,7 @@ public class BiomassGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
     }
     @Override
     protected Text getContainerName() {
-        return Text.translatable("container.fsg.generator.biomass");
+        return Text.translatable(CONTAINER_NAME);
     }
 
     public static boolean bioUsable(ItemStack stack){

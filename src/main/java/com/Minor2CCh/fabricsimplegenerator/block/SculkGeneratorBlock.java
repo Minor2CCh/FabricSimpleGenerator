@@ -1,8 +1,8 @@
 package com.Minor2CCh.fabricsimplegenerator.block;
 
-import com.Minor2CCh.fabricsimplegenerator.block.entity.FuelGeneratorBlockEntity;
 import com.Minor2CCh.fabricsimplegenerator.block.entity.SculkGeneratorBlockEntity;
 import com.Minor2CCh.fabricsimplegenerator.registry.FSGBlockEntityTypes;
+import com.Minor2CCh.fabricsimplegenerator.registry.FSGStats;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
@@ -27,9 +27,7 @@ public class SculkGeneratorBlock extends AbstractGeneratorBlock{
             instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(block -> Optional.of(GeneratorTier.SCULK)), createSettingsCodec())
                     .apply(instance, (gTier, settings) -> new SculkGeneratorBlock(gTier.orElse(GeneratorTier.SCULK), 1, settings)));
     public SculkGeneratorBlock(GeneratorTier gTier, int gMul, Settings settings) {
-        super(settings);
-        this.gTier = gTier;
-        this.gMul = gMul;
+        super(gTier, gMul, settings);
     }
 
     @Override
@@ -41,6 +39,7 @@ public class SculkGeneratorBlock extends AbstractGeneratorBlock{
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof SculkGeneratorBlockEntity) {
             NamedScreenHandlerFactory screenHandlerFactory = world.getBlockState(pos).createScreenHandlerFactory(world, pos);
+            player.incrementStat(FSGStats.INTERACT_WITH_SCULK_GENERATOR);
 
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);

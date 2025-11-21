@@ -7,6 +7,7 @@
     "fabric_simple_generator:emerald_generator",
     "fabric_simple_generator:netherite_generator",
     "fabric_simple_generator:sculk_generator",
+    "fabric_simple_generator:enchantment_generator",
     "fabric_simple_generator:iron_generator_8x",
     "fabric_simple_generator:copper_generator_8x",
     "fabric_simple_generator:gold_generator_8x",
@@ -14,7 +15,9 @@
     "fabric_simple_generator:emerald_generator_8x",
     "fabric_simple_generator:netherite_generator_8x",
     "fabric_simple_generator:sculk_generator_8x",
+    "fabric_simple_generator:enchantment_generator_8x",
     "fabric_simple_generator:netherite_generator_64x",
-    "fabric_simple_generator:sculk_generator_64x"
+    "fabric_simple_generator:sculk_generator_64x",
+    "fabric_simple_generator:enchantment_generator_64x"
   ]
 }
