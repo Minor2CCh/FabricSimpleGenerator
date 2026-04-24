@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:iron_ingot"
+      "tag": "c:ingots/iron"
     },
     "$": {
       "item": "fabric_simple_generator:copper_generator"
     },
     "A": {
-      "item": "minecraft:redstone_block"
+      "tag": "c:storage_blocks/redstone"
     }
   },
   "pattern": [

@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:copper_ingot"
+      "tag": "c:ingots/copper"
     },
     "$": {
       "item": "minecraft:furnace"
     },
     "A": {
-      "item": "minecraft:redstone_block"
+      "tag": "c:storage_blocks/redstone"
     }
   },
   "pattern": [
