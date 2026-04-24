@@ -4,7 +4,7 @@
   "version": "${version}",
   "name": "Fabric Simple Generator",
   "description": "A Fabric mod that adds a simple generator using fuel as its material.",
-  "authors": ["Minor2CCh"],
+  "authors": ["${mod_authors}"],
   "contact": {
     "homepage": "https://modrinth.com/project/fabric-simple-generator",
     "issues": "https://github.com/Minor2CCh/FabricSimpleGenerator/issues",
@@ -15,13 +15,13 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "com.Minor2CCh.fabricsimplegenerator.client.datagen.FabricSimpleGeneratorDataGenerator"
+      "com.minor2cch.fabricsimplegenerator.client.datagen.FabricSimpleGeneratorDataGenerator"
     ],
     "client": [
-      "com.Minor2CCh.fabricsimplegenerator.client.FabricSimpleGeneratorClient"
+      "com.minor2cch.fabricsimplegenerator.client.FabricSimpleGeneratorClient"
     ],
     "main": [
-      "com.Minor2CCh.fabricsimplegenerator.FabricSimpleGenerator"
+      "com.minor2cch.fabricsimplegenerator.FabricSimpleGenerator"
     ]
   },
   "mixins": [

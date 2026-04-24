@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:emerald"
+      "tag": "c:gems/emerald"
     },
     "$": {
       "item": "fabric_simple_generator:gold_generator"
     },
     "A": {
-      "item": "minecraft:redstone_block"
+      "tag": "c:storage_blocks/redstone"
     }
   },
   "pattern": [
