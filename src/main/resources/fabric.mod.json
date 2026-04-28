@@ -25,15 +25,11 @@
     ]
   },
   "mixins": [
-    "fabric_simple_generator.mixins.json",
-    {
-      "config": "fabric_simple_generator.client.mixins.json",
-      "environment": "client"
-    }
+    "fabric_simple_generator.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.17.0",
-    "fabric": "*",
-    "minecraft": "${minecraft_version}"
+    "fabricloader": ">=0.19.0",
+    "fabric-api": "*",
+    "minecraft": ">=26.1 <26.2"
   }
 }

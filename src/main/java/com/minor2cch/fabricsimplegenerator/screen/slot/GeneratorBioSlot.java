@@ -4,6 +4,7 @@ import com.minor2cch.fabricsimplegenerator.screen.BiomassGeneratorMenu;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.NonNull;
 
 public class GeneratorBioSlot extends Slot {
     private final BiomassGeneratorMenu handler;
@@ -14,7 +15,7 @@ public class GeneratorBioSlot extends Slot {
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NonNull ItemStack stack) {
         return this.handler.isBio(stack);
     }
 }

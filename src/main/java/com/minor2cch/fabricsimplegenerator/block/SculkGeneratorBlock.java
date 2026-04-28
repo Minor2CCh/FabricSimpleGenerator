@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class SculkGeneratorBlock extends AbstractGeneratorBlock{
     public static final MapCodec<SculkGeneratorBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(block -> Optional.of(GeneratorTier.SCULK)), propertiesCodec())
+            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(_ -> Optional.of(GeneratorTier.SCULK)), propertiesCodec())
                     .apply(instance, (gTier, settings) -> new SculkGeneratorBlock(gTier.orElse(GeneratorTier.SCULK), 1, settings)));
     public SculkGeneratorBlock(GeneratorTier gTier, int gMul, Properties settings) {
         super(gTier, gMul, settings);

@@ -3,6 +3,7 @@ package com.minor2cch.fabricsimplegenerator.block;
 import com.minor2cch.fabricsimplegenerator.block.entity.AbstractGeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
@@ -15,12 +16,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractGeneratorBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected final GeneratorTier gTier;
     protected final int gMul;
@@ -32,7 +33,7 @@ public abstract class AbstractGeneratorBlock extends BaseEntityBlock {
     }
     @Override
     protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {
             this.openContainer(level, pos, player);
@@ -86,15 +87,8 @@ public abstract class AbstractGeneratorBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof AbstractGeneratorBlockEntity generatorBlockEntity) {
-                Containers.dropContents(level, pos, generatorBlockEntity);
-                level.updateNeighbourForOutputSignal(pos,this);
-            }
-            super.onRemove(state, level, pos, newState, moved);
-        }
+    protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
+        Containers.updateNeighboursAfterDestroy(state, level, pos);
     }
     @Override
     protected boolean hasAnalogOutputSignal(BlockState state) {
@@ -102,7 +96,7 @@ public abstract class AbstractGeneratorBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(final BlockState state, final Level level, final BlockPos pos, final Direction direction) {
         BlockEntity be = level.getBlockEntity(pos);
         if(be instanceof AbstractGeneratorBlockEntity generator){
             long amount = generator.getAmount();

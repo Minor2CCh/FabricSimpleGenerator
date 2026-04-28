@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class FuelGeneratorBlock extends AbstractGeneratorBlock{
     public static final MapCodec<FuelGeneratorBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(block -> Optional.of(GeneratorTier.IRON)), propertiesCodec())
+            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(_ -> Optional.of(GeneratorTier.IRON)), propertiesCodec())
                     .apply(instance, (gTier, settings) -> new FuelGeneratorBlock(gTier.orElse(GeneratorTier.IRON), 1, settings)));
     public FuelGeneratorBlock(GeneratorTier gTier, int gMul, Properties properties) {
         super(gTier, gMul, properties);

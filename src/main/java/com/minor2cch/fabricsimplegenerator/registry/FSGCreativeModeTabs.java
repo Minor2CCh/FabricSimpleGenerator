@@ -1,7 +1,7 @@
 package com.minor2cch.fabricsimplegenerator.registry;
 
 import com.minor2cch.fabricsimplegenerator.FabricSimpleGenerator;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 public final class FSGCreativeModeTabs {
     private FSGCreativeModeTabs(){}
     public static final ResourceKey<CreativeModeTab> FSG_ITEM_GROUP_KEY = ResourceKey.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), FabricSimpleGenerator.of("fsg_item_group"));
-    public static final CreativeModeTab FSG_ITEM_GROUP = register("fsg_item_group", FabricItemGroup.builder()
+    public static final CreativeModeTab FSG_ITEM_GROUP = register("fsg_item_group", FabricCreativeModeTab.builder()
             .icon(() -> new ItemStack(FSGItems.IRON_GENERATOR))
             .title(Component.translatable(String.format("itemGroup.%s.%s", FabricSimpleGenerator.MOD_ID, "fsg_item_group")))
             .displayItems((parameters, output) -> {

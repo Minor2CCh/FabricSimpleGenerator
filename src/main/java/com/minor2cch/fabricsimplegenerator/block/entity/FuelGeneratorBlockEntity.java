@@ -9,15 +9,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
-
+import org.jspecify.annotations.NonNull;
 
 public class FuelGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
     public static final String CONTAINER_NAME = getTranslationKey(FSGBlockEntityTypes.FUEL_GENERATOR_BLOCK_ENTITY);
@@ -29,11 +26,11 @@ public class FuelGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
         this(FuelGeneratorBlock.getTier(state.getBlock()), FuelGeneratorBlock.getMul(state.getBlock()), pos, state);
     }
     @Override
-    protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inventory) {
         return new FuelGeneratorMenu(syncId, inventory, this, dataAccess);
     }
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
+    public @Nullable AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inv, @NonNull Player player) {
         return new FuelGeneratorMenu(syncId, inv, this, dataAccess);
     }
 
@@ -43,27 +40,25 @@ public class FuelGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
     }
     // 毎tick実行されるメソッド
 
-    public static boolean fuelUsable(ItemStack stack){
-        return fuelUsable(stack.getItem());
+    public static boolean fuelUsable(Level level, ItemStack stack){
+        if(level == null){
+            return false;
+        }
+        return level.fuelValues().isFuel(stack);
     }
-    public static boolean fuelUsable(Item item){
-        Map<Item, Integer> fuelTimeMap = FurnaceBlockEntity.getFuel();
-        return fuelTimeMap.containsKey(item);
-    }
-    public static int fuelTime(ItemStack stack){
-        return fuelTime(stack.getItem());
-    }
-    public static int fuelTime(Item item){
-        Map<Item, Integer> fuelTimeMap = FurnaceBlockEntity.getFuel();
-        return fuelTimeMap.getOrDefault(item, 0);
+    public static int fuelTime(Level level, ItemStack stack){
+        if(level == null){
+            return 0;
+        }
+        return level.fuelValues().burnDuration(stack);
     }
     @Override
     public boolean ingredientUsable(ItemStack itemStack){
-        return fuelUsable(itemStack);
+        return fuelUsable(this.getLevel(), itemStack);
     }
     @Override
     public int getIngredientTime(ItemStack itemStack){
-        return fuelTime(itemStack);
+        return fuelTime(this.getLevel(), itemStack);
     }
 
 }

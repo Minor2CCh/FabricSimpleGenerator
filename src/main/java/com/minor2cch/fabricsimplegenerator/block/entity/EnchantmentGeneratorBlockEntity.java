@@ -6,9 +6,7 @@ import com.minor2cch.fabricsimplegenerator.config.FSGConfigLoader;
 import com.minor2cch.fabricsimplegenerator.registry.FSGBlockEntityTypes;
 import com.minor2cch.fabricsimplegenerator.screen.EnchantmentGeneratorMenu;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,8 +19,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -39,15 +40,15 @@ public class EnchantmentGeneratorBlockEntity extends AbstractGeneratorBlockEntit
         this(EnchantmentGeneratorBlock.getTier(state.getBlock()), EnchantmentGeneratorBlock.getMul(state.getBlock()), pos, state);
     }
     @Override
-    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.loadAdditional(compoundTag, provider);
-        this.overrideGenerate = compoundTag.getLong("OverrideGenerate");
+    public void loadAdditional(final @NonNull ValueInput input) {
+        super.loadAdditional(input);
+        this.overrideGenerate = input.getLongOr("OverrideGenerate", 0);
     }
     // 保存処理（ワールドセーブ時など）
     @Override
-    public void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.saveAdditional(compoundTag, provider);
-        compoundTag.putLong("OverrideGenerate", this.overrideGenerate);
+    public void saveAdditional(@NonNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putLong("OverrideGenerate", this.overrideGenerate);
     }
 
     @Override
@@ -74,11 +75,11 @@ public class EnchantmentGeneratorBlockEntity extends AbstractGeneratorBlockEntit
     }
 
     @Override
-    protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inventory) {
         return new EnchantmentGeneratorMenu(syncId, inventory, this, dataAccess);
     }
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
+    public @Nullable AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inv, @NonNull Player player) {
         return new EnchantmentGeneratorMenu(syncId, inv, this, dataAccess);
     }
     public static boolean enchantingItemUsable(ItemStack stack){

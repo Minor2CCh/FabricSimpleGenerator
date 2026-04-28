@@ -7,7 +7,7 @@ import com.minor2cch.fabricsimplegenerator.screen.FuelGeneratorMenu;
 import com.minor2cch.fabricsimplegenerator.screen.SculkGeneratorMenu;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -19,7 +19,7 @@ public final class FSGMenus {
     public static final MenuType<BiomassGeneratorMenu> BIOMASS_GENERATOR_SCREEN_HANDLER = register("biomass_generator_screen_handler", new MenuType<>(BiomassGeneratorMenu::new, FeatureFlagSet.of()));
     public static final MenuType<EnchantmentGeneratorMenu> ENCHANTMENT_GENERATOR_SCREEN_HANDLER = register("enchantment_generator_screen_handler", new MenuType<>(EnchantmentGeneratorMenu::new, FeatureFlagSet.of()));
     public static <T extends AbstractContainerMenu> MenuType<T> register(String name, MenuType<T> handler){
-        ResourceLocation id = FabricSimpleGenerator.of(name);
+        Identifier id = FabricSimpleGenerator.of(name);
         return Registry.register(BuiltInRegistries.MENU, id, handler);
     }
     public static void init() {

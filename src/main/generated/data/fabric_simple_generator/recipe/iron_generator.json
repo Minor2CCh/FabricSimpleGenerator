@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:ingots/iron"
-    },
-    "$": {
-      "item": "fabric_simple_generator:copper_generator"
-    },
-    "A": {
-      "tag": "c:storage_blocks/redstone"
-    }
+    "#": "#c:ingots/iron",
+    "$": "fabric_simple_generator:copper_generator",
+    "A": "#c:storage_blocks/redstone"
   },
   "pattern": [
     "###",
@@ -18,7 +12,6 @@
     "#A#"
   ],
   "result": {
-    "count": 1,
     "id": "fabric_simple_generator:iron_generator"
   }
 }
