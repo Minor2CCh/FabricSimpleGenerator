@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 
 public class BiomassGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
@@ -28,11 +29,11 @@ public class BiomassGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
         this(BiomassGeneratorBlock.getTier(state.getBlock()), BiomassGeneratorBlock.getMul(state.getBlock()), pos, state);
     }
     @Override
-    protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inventory) {
         return new BiomassGeneratorMenu(syncId, inventory, this, dataAccess);
     }
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
+    public @Nullable AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inv, @NonNull Player player) {
         return new BiomassGeneratorMenu(syncId, inv, this, dataAccess);
     }
     @Override

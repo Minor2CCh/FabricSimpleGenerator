@@ -5,6 +5,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.jspecify.annotations.NonNull;
 
 public class GeneratorFuelSlot extends Slot {
     private final FuelGeneratorMenu handler;
@@ -15,12 +16,12 @@ public class GeneratorFuelSlot extends Slot {
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NonNull ItemStack stack) {
         return this.handler.isFuel(stack) || isBucket(stack);
     }
 
     @Override
-    public int getMaxStackSize(ItemStack stack) {
+    public int getMaxStackSize(@NonNull ItemStack stack) {
         return isBucket(stack) ? 1 : super.getMaxStackSize(stack);
     }
 

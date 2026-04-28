@@ -8,13 +8,16 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import team.reborn.energy.api.EnergyStorageUtil;
 
 public abstract class AbstractGeneratorMenu extends AbstractContainerMenu {
     protected final Container container;
     private final ContainerData data;
+    protected final Level level;
     protected AbstractGeneratorMenu(@Nullable MenuType<?> type, int syncId, Inventory inventory) {
         this(type, syncId, inventory, new SimpleContainer(2), new SimpleContainerData(AbstractGeneratorBlockEntity.PROPERTY_SIZE));
     }
@@ -23,6 +26,7 @@ public abstract class AbstractGeneratorMenu extends AbstractContainerMenu {
         checkContainerSize(container, 2);
         this.container = container;
         this.data = data;
+        this.level = inventory.player.level();
         // some inventories do custom logic when a player opens it.
         container.startOpen(inventory.player);
         this.addDataSlots(this.data);
@@ -55,7 +59,7 @@ public abstract class AbstractGeneratorMenu extends AbstractContainerMenu {
     }
     protected abstract void createIngredientSlot(Container container);
     @Override
-    public @NotNull ItemStack quickMoveStack(Player player, int slot) {
+    public @NotNull ItemStack quickMoveStack(@NonNull Player player, int slot) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot2 = this.slots.get(slot);
         if (slot2.hasItem()) {
@@ -107,7 +111,7 @@ public abstract class AbstractGeneratorMenu extends AbstractContainerMenu {
         return EnergyStorageUtil.isEnergyStorage(itemStack);
     }
     @Override
-    public boolean stillValid(Player player) {return this.container.stillValid(player);
+    public boolean stillValid(@NonNull Player player) {return this.container.stillValid(player);
     }
 
     public boolean isBurning() {

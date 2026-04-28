@@ -4,6 +4,7 @@ import com.minor2cch.fabricsimplegenerator.screen.EnchantmentGeneratorMenu;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.NonNull;
 
 public class GeneratorEnchantedItemSlot extends Slot {
     private final EnchantmentGeneratorMenu handler;
@@ -14,7 +15,7 @@ public class GeneratorEnchantedItemSlot extends Slot {
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NonNull ItemStack stack) {
         return this.handler.isEnchantingItem(stack);
     }
 }

@@ -26,7 +26,7 @@ import java.util.Optional;
 
 public class EnchantmentGeneratorBlock extends AbstractGeneratorBlock{
     public static final MapCodec<EnchantmentGeneratorBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(block -> Optional.of(GeneratorTier.ENCHANTMENT)), propertiesCodec())
+            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(_ -> Optional.of(GeneratorTier.ENCHANTMENT)), propertiesCodec())
                     .apply(instance, (gTier, properties) -> new EnchantmentGeneratorBlock(gTier.orElse(GeneratorTier.ENCHANTMENT), 1, properties)));
 
     public EnchantmentGeneratorBlock(GeneratorTier gTier, int gMul, Properties properties) {

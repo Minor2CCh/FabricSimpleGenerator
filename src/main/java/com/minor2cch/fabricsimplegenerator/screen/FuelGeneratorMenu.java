@@ -23,7 +23,7 @@ public class FuelGeneratorMenu extends AbstractGeneratorMenu {
     public boolean isIngredientStack(ItemStack itemStack) {
         return isFuel(itemStack);
     }
-    public boolean isFuel(ItemStack itemStack) {
-        return FuelGeneratorBlockEntity.fuelUsable(itemStack);
+    public boolean isFuel(final ItemStack itemStack) {
+        return FuelGeneratorBlockEntity.fuelUsable(level, itemStack);
     }
 }

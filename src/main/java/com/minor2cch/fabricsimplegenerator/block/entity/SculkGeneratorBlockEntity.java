@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 
@@ -35,11 +36,11 @@ public class SculkGeneratorBlockEntity extends AbstractGeneratorBlockEntity{
         this(SculkGeneratorBlock.getTier(state.getBlock()), SculkGeneratorBlock.getMul(state.getBlock()), pos, state);
     }
     @Override
-    protected @NotNull AbstractContainerMenu createMenu(int syncId, Inventory inventory) {
+    protected @NotNull AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inventory) {
         return new SculkGeneratorMenu(syncId, inventory, this, dataAccess);
     }
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
+    public @Nullable AbstractContainerMenu createMenu(int syncId, @NonNull Inventory inv, @NonNull Player player) {
         return new SculkGeneratorMenu(syncId, inv, this, dataAccess);
     }
     @Override

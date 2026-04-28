@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "fabric_simple_generator:azaleas"
-    },
-    "$": {
-      "item": "fabric_simple_generator:copper_generator"
-    },
-    "A": {
-      "tag": "c:storage_blocks/redstone"
-    },
-    "R": {
-      "tag": "minecraft:leaves"
-    }
+    "#": "#fabric_simple_generator:azaleas",
+    "$": "fabric_simple_generator:copper_generator",
+    "A": "#c:storage_blocks/redstone",
+    "R": "#minecraft:leaves"
   },
   "pattern": [
     "###",
@@ -21,7 +13,6 @@
     "RAR"
   ],
   "result": {
-    "count": 1,
     "id": "fabric_simple_generator:biomass_generator"
   }
 }

@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class BiomassGeneratorBlock extends AbstractGeneratorBlock{
     public static final MapCodec<BiomassGeneratorBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(block -> Optional.of(GeneratorTier.BIOMASS)), propertiesCodec())
+            instance -> instance.group(GeneratorTier.CODEC.optionalFieldOf("gTier").forGetter(_ -> Optional.of(GeneratorTier.BIOMASS)), propertiesCodec())
                     .apply(instance, (gTier, properties) -> new BiomassGeneratorBlock(gTier.orElse(GeneratorTier.BIOMASS), 1, properties)));
     public BiomassGeneratorBlock(GeneratorTier gTier, int gMul, Properties properties) {
         super(gTier, gMul, properties);

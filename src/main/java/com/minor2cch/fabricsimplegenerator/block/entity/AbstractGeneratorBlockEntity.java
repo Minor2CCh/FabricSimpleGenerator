@@ -7,8 +7,9 @@ import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleStackStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.core.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -19,8 +20,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import team.reborn.energy.api.EnergyStorage;
 import team.reborn.energy.api.EnergyStorageUtil;
 import team.reborn.energy.api.base.SimpleEnergyStorage;
@@ -117,13 +121,13 @@ public abstract class AbstractGeneratorBlockEntity extends BaseContainerBlockEnt
                 };
     }
     @Override
-    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.loadAdditional(compoundTag, provider);
-        this.energyStorage.amount = compoundTag.getLong("readCapacity");
+    public void loadAdditional(final @NonNull ValueInput input) {
+        super.loadAdditional(input);
+        this.energyStorage.amount = input.getLongOr("readCapacity", 0);
         this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        this.burnTime = compoundTag.getInt("BurnTime");
-        this.startBurnTime = compoundTag.getInt("StartBurnTime");
-        ContainerHelper.loadAllItems(compoundTag, this.inventory, provider);
+        this.burnTime = input.getIntOr("BurnTime", 0);
+        this.startBurnTime = input.getIntOr("StartBurnTime", 0);
+        ContainerHelper.loadAllItems(input, this.inventory);
 
 
     }
@@ -132,21 +136,21 @@ public abstract class AbstractGeneratorBlockEntity extends BaseContainerBlockEnt
         return this.inventory;
     }
     @Override
-    protected void setItems(NonNullList<ItemStack> inventory) {
+    protected void setItems(@NonNull NonNullList<ItemStack> inventory) {
         this.inventory = inventory;
     }
 
     // 保存処理（ワールドセーブ時など）
     @Override
-    public void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.saveAdditional(compoundTag, provider);
-        compoundTag.putLong("readCapacity", this.energyStorage.amount);
-        compoundTag.putInt("BurnTime", this.burnTime);
-        compoundTag.putInt("StartBurnTime", this.startBurnTime);
-        ContainerHelper.saveAllItems(compoundTag, this.inventory, provider);
+    public void saveAdditional(@NonNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putLong("readCapacity", this.energyStorage.amount);
+        output.putInt("BurnTime", this.burnTime);
+        output.putInt("StartBurnTime", this.startBurnTime);
+        ContainerHelper.saveAllItems(output, this.inventory);
     }
     @Override
-    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NonNull Provider provider) {
         return saveWithoutMetadata(provider); // クライアントに初期データ送信
     }
     public void setAmount(long value) {
@@ -184,18 +188,18 @@ public abstract class AbstractGeneratorBlockEntity extends BaseContainerBlockEnt
         return 2;
     }
     @Override
-    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir) {
+    public boolean canPlaceItemThroughFace(int slot, @NonNull ItemStack stack, @Nullable Direction dir) {
         return slot != BATTERY_SLOT_INDEX && ingredientUsable(stack);
     }
     @Override
-    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction dir){
+    public boolean canTakeItemThroughFace(int slot, @NonNull ItemStack stack, @NonNull Direction dir){
         if(slot == BATTERY_SLOT_INDEX){
             return false;
         }
-        return (stack != null && !ingredientUsable(stack));
+        return (!stack.isEmpty() && !ingredientUsable(stack));
     }
     @Override
-    public int @NotNull [] getSlotsForFace(Direction side){
+    public int @NotNull [] getSlotsForFace(@NonNull Direction side){
         return new int[] {0};
     }
 
@@ -207,7 +211,7 @@ public abstract class AbstractGeneratorBlockEntity extends BaseContainerBlockEnt
     }
 
     protected void tick(Level level, BlockPos pos, BlockState state){
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if(state.getBlock() instanceof AbstractGeneratorBlock){
                 if(getBurnTime() > 0){
                     long amount = getAmount();
@@ -250,11 +254,11 @@ public abstract class AbstractGeneratorBlockEntity extends BaseContainerBlockEnt
         return TICK_GENERATE;
     }
     protected ItemStack consumeStack(Level level, BlockPos pos, ItemStack stack){
-        if(!stack.getRecipeRemainder().isEmpty()){
-            Item remainItem = stack.getRecipeRemainder().getItem();
+        if(stack.getCraftingRemainder() != null){
+            Item remainItem = stack.getCraftingRemainder().item().value();
             stack.shrink(1);
             if(stack.getCount() > 0){
-                if(!level.isClientSide){
+                if(!level.isClientSide()){
                     level.addFreshEntity(new ItemEntity(level, pos.getX()+0.5, pos.getY()+1,pos.getZ()+0.5, remainItem.getDefaultInstance()));
                 }
                 return stack;
@@ -298,13 +302,13 @@ public abstract class AbstractGeneratorBlockEntity extends BaseContainerBlockEnt
             AbstractGeneratorBlockEntity be = this;
             SingleStackStorage slotStorage = new SingleStackStorage() {
                 @Override
-                protected ItemStack getStack() {
+                protected @NonNull ItemStack getStack() {
                     // 直接参照することで write-back が可能になる
                     return inventory.get(BATTERY_SLOT_INDEX);
                 }
 
                 @Override
-                protected void setStack(ItemStack stack) {
+                protected void setStack(@NonNull ItemStack stack) {
                     inventory.set(BATTERY_SLOT_INDEX, stack);
                 }
 
@@ -328,9 +332,9 @@ public abstract class AbstractGeneratorBlockEntity extends BaseContainerBlockEnt
         }
     }
     public static String getTranslationKey(BlockEntityType<?> blockEntityType){
-        Holder.Reference<BlockEntityType<?>> reference = blockEntityType.builtInRegistryHolder();
-        if(reference != null && reference.unwrapKey().isPresent()){
-            ResourceLocation key = reference.unwrapKey().get().location();
+        BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(blockEntityType);
+        Identifier key = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(blockEntityType);
+        if(key != null){
             return "container." + key.toString().replace(':', '.');
 
         }else{
