@@ -1,0 +1,4 @@
+// 26.1.2	-999999999-01-01T00:00:00	Fabric Simple Generator/Tags for minecraft:block
+94c9d772b139ee45e60a182830a3e54a79b0497d data/minecraft/tags/block/guarded_by_piglins.json
+91a67f16091dafb33b328b983ad209f0168fda53 data/minecraft/tags/block/mineable/hoe.json
+ba03298b6a5cdd9768891a9739b244a588a350bf data/minecraft/tags/block/mineable/pickaxe.json
