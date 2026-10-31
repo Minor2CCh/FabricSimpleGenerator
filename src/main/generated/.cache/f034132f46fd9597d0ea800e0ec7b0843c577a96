@@ -1,7 +1,7 @@
-// 1.21.1	2026-04-21T14:56:19.4216162	Fabric Simple Generator/Tags for minecraft:item
+// 1.21.1	2026-10-30T15:46:06.2433672	Fabric Simple Generator/Tags for minecraft:item
 7899120a0a24e70b99dd25721ffb51d62fcb24cd data\fabric_simple_generator\tags\item\sculk_ingredient_middle.json
 e5d373997f6d53f3992eb3599779f855920a20fa data\fabric_simple_generator\tags\item\sculk_ingredient_bit.json
-5dec8189599a5119c76a19347347c6f9d31d2bc3 data\fabric_simple_generator\tags\item\sculk_ingredient_high.json
+e0a2ee0b858809637d023eac9cb611036de4760a data\fabric_simple_generator\tags\item\sculk_ingredient_high.json
 ffc6ee1480bdda5ed2aa45dde6eae2ef19e3e119 data\fabric_simple_generator\tags\item\sculk_ingredient_extra.json
 d2bd7c61e83706410e20d72b8414a92617d8b36b data\fabric_simple_generator\tags\item\sculk_ingredient_ultimate.json
 e7fc5fdbf45b1789f5a08f0cab347db4aa2189e2 data\fabric_simple_generator\tags\item\sculk_ingredient_low.json
