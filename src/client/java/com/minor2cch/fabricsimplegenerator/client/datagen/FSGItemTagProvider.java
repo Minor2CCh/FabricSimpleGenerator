@@ -36,7 +36,7 @@ public class FSGItemTagProvider extends FabricTagProvider.ItemTagProvider{
         ;
         getOrCreateTagBuilder(FSGItemTags.SCULK_INGREDIENT_SPECIAL);
         getOrCreateTagBuilder(FSGItemTags.SCULK_INGREDIENT_HIGH)
-                .addOptional(ResourceLocation.fromNamespaceAndPath("apothic_ehchanting", "warden_tendril"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("apothic_enchanting", "warden_tendril"))
                 .addOptional(ResourceLocation.fromNamespaceAndPath(DEEPER_DARKER_MOD_ID, "warden_carapace"))
                 .addOptional(ResourceLocation.fromNamespaceAndPath(DEEPER_DARKER_MOD_ID, "heart_of_the_deep"));
         getOrCreateTagBuilder(FSGItemTags.SCULK_INGREDIENT_EXTRA)
